@@ -42,5 +42,14 @@ namespace ConsoleApp1
             }
             return (double)sum / arr.Length;
         }
+
+        static int MaxValue(int[] arr)
+        {
+            int max = arr[0];
+
+            //place for implementation
+
+            return max;
+        }
     }
 }
