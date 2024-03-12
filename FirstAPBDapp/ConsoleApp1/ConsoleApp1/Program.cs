@@ -31,6 +31,16 @@ namespace ConsoleApp1
 
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
+
+        }
+        static double CalculateAverage(int[] arr)
+        {
+            int sum = 0;
+            foreach (var num in arr)
+            {
+                sum += num;
+            }
+            return (double)sum / arr.Length;
         }
     }
 }
