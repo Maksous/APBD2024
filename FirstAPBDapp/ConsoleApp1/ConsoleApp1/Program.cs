@@ -26,7 +26,7 @@ namespace ConsoleApp1
             }
             else
             {
-                Console.WriteLine("Invalid input. Please enter an integer");
+                Console.WriteLine("Wrong input");
             }
 
             Console.WriteLine("Press any key to exit");
