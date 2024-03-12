@@ -36,9 +36,9 @@ namespace ConsoleApp1
         static double CalculateAverage(int[] arr)
         {
             int sum = 0;
-            foreach (var num in arr)
+            foreach (var b in arr)
             {
-                sum += num;
+                sum += b;
             }
             return (double)sum / arr.Length;
         }
