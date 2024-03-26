@@ -1,9 +1,22 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace LegacyApp
 {
     public class UserService
     {
+        private readonly IClientRepository _clientRepository;
+        private readonly IUserCreditService _userCreditService;
+        private readonly IEnumerable<IUserValidator> _userValidators;
+
+        public UserService(IClientRepository clientRepository, IUserCreditService userCreditService, IEnumerable<IUserValidator> userValidators)
+        {
+            _clientRepository = clientRepository;
+            _userCreditService = userCreditService;
+            _userValidators = userValidators;
+        }
+
         public bool AddUser(string firstName, string lastName, string email, DateTime dateOfBirth, int clientId)
         {
             if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
@@ -11,10 +24,13 @@ namespace LegacyApp
                 return false;
             }
 
+            /*
+             * Refactored in IUserValidator and EmailValidator
             if (!email.Contains("@") && !email.Contains("."))
             {
                 return false;
             }
+            */
 
             var now = DateTime.Now;
             int age = now.Year - dateOfBirth.Year;
