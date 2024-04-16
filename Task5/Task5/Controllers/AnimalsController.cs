@@ -13,6 +13,13 @@ public class AnimalsController : ControllerBase
         _configuration = configuration;
     }
 
+    private List<Dictionary<string, object>> ConvertDataTableToList(DataTable dt)
+    {
+        var columns = dt.Columns.Cast<DataColumn>();
+        return dt.Rows.Cast<DataRow>()
+            .Select(row => columns.ToDictionary(column => column.ColumnName, column => row[column])).ToList();
+    }
+
     // GET: api/animals
     [HttpGet]
     public IActionResult GetAnimals(string orderBy = "name")
@@ -20,19 +27,21 @@ public class AnimalsController : ControllerBase
         string query = $"SELECT * FROM Animals ORDER BY {orderBy}";
         DataTable table = new DataTable();
         string sqlDataSource = _configuration.GetConnectionString("DefaultConnection");
-        SqlDataReader myReader;
         using (SqlConnection myCon = new SqlConnection(sqlDataSource))
         {
             myCon.Open();
             using (SqlCommand myCommand = new SqlCommand(query, myCon))
             {
-                myReader = myCommand.ExecuteReader();
-                table.Load(myReader);
-                myReader.Close();
-                myCon.Close();
+                using (SqlDataReader myReader = myCommand.ExecuteReader())
+                {
+                    table.Load(myReader);
+                }
             }
+            myCon.Close();
         }
-        return Ok(table);
+
+        var list = ConvertDataTableToList(table);
+        return Ok(list);
     }
 
     // POST: api/animals
