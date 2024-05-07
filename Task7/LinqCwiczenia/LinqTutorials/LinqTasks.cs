@@ -177,8 +177,7 @@ namespace LinqTutorials
         /// </summary>
         public static IEnumerable<Emp> Task1()
         {
-            IEnumerable<Emp> result = null;
-            return result;
+            return Emps.Where(emp => emp.Job == "Backend programmer");
         }
 
         /// <summary>
@@ -196,8 +195,13 @@ namespace LinqTutorials
         /// </summary>
         public static int Task3()
         {
-            int result = 0;
-            return result;
+            return Emps.Max(emp => emp.Salary);
+        }
+
+        public static void ShowTask3Result()
+        {
+            int maxSalary = Task3();
+            Console.WriteLine(maxSalary);
         }
 
         /// <summary>
